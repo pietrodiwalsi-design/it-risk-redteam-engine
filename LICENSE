@@ -1,0 +1,63 @@
+RESTRICTED ETHICAL & DEFENSIVE USE LICENSE
+Version 1.0 (October 2026)
+
+Copyright (c) 2026 Peter Van Walsem (pietrodiwalsi-design). All Rights Reserved.
+
+================================================================================
+TERMS AND CONDITIONS FOR ACCESS, USAGE, AND DISTRIBUTION
+================================================================================
+
+1. PREAMBLE & ETHICAL PURPOSE
+This software ("IT Risk & Red Teaming Assessment Engine") is authored exclusively 
+for defensive cybersecurity resilience, regulatory compliance validation (including 
+DORA Articles 26/27 and TIBER-EU), and authorized, non-destructive IT risk auditing. 
+The use of this tooling to assess external surfaces and AI interfaces requires 
+uncompromising adherence to explicit legal authorization and ethical standards.
+
+2. GRANT OF PERMITTED USE
+Subject to the restrictions set forth herein, the Copyright Holder hereby grants 
+authorized users a non-exclusive, revocable license to execute, review, and modify 
+this software solely for:
+  a) Internal security posture and vulnerability auditing of systems and AI assets 
+     strictly owned, operated, or explicitly contracted by the user.
+  b) Supervisory and compliance assessments under established testing frameworks 
+     (e.g., TIBER-EU, DORA, PTES, NIST SP 800-115).
+  c) Academic, educational, and defensive security research conducted within 
+     controlled, non-production laboratory environments.
+
+3. STRICT PROHIBITIONS & COMPLIANCE RESTRICTIONS
+Any use of this software outside the scope of Section 2 is strictly prohibited. 
+You expressly agree and warrant that you shall NOT:
+  a) Execute probes, network scans, prompt injections, or testing vectors against 
+     any third-party system, IP address, domain, or AI endpoint without prior 
+     express, written authorization from the verified legal asset owner.
+  b) Utilize this software or any derivative works for unauthorized intrusion, 
+     denial of service (DoS), disruption of production services, malware delivery, 
+     data exfiltration, or any malicious or unlawful purpose.
+  c) Bypass or disable the built-in Scope Boundary Enforcer (ScopeManager), 
+     Safety Controller rate limits, or Emergency Stop (Kill Switch) mechanisms 
+     when operating outside of isolated offline sandboxes.
+  d) Commercialize, relicense, sell, or bundle this software into proprietary 
+     commercial SaaS offerings without prior written consent from the Copyright Holder.
+
+4. RULES OF ENGAGEMENT (RoE) MANDATE
+All active executions must operate strictly within predefined Rules of Engagement 
+defined in an authorization configuration file (e.g., scope.yaml), documenting 
+asset ownership, execution windows, rate limits, and SOC deconfliction contacts.
+
+5. INTELLECTUAL PROPERTY & ATTRIBUTION
+The Copyright Holder retains all right, title, and interest in and to the software, 
+documentation, architecture blueprints, and test vector catalogs. All copies and 
+substantial portions of the software must retain this copyright notice and license text.
+
+6. DISCLAIMER OF LIABILITY & NO WARRANTY
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER "AS IS", WITHOUT WARRANTY OF 
+ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+
+IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, REGULATORY 
+PENALTIES, SERVICE OUTAGES, DATA LOSS, OR OTHER LIABILITY, WHETHER IN AN ACTION 
+OF CONTRACT, TORT (INCLUDING NEGLIGENCE), OR OTHERWISE, ARISING FROM, OUT OF, 
+OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR MISUSE OF THE SOFTWARE BY ANY PARTY.
+USERS BEAR SOLE AND EXCLUSIVE RESPONSIBILITY FOR ENSURING THEIR TESTING ACTIVITIES 
+COMPLY FULLY WITH APPLICABLE LAWS AND REGULATIONS.

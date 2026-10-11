@@ -2,7 +2,8 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Framework Alignment](https://img.shields.io/badge/framework-PTES%20%7C%20TIBER--EU%20%7C%20DORA%20%7C%20OWASP-green.svg)](docs/spec/requirements.md)
-[![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-Restricted%20Ethical%20Use-red.svg)](LICENSE)
+[![Security Policy](https://img.shields.io/badge/security-responsible%20disclosure-blue.svg)](SECURITY.md)
 
 An enterprise-grade, risk-governed assessment framework designed to evaluate external attack surfaces (networks, web applications, APIs) and AI/LLM interfaces (prompt injection, context leakage, excessive agency).
 
@@ -35,10 +36,12 @@ Unlike typical offensive security scripts, this engine is built from the ground 
 
 ## Documentation & Practitioner Guides
 
-- **[Praktijkgids & Use-Cases (Dutch Guide)](docs/guides/practical_use_cases_guide.md)**: Volledige gids voor de dagelijkse IT Risk praktijk (DORA TLPT, Vendor AI audits, hands-on testcases en presentatietips voor CISO/Directie).
+- **[Practical Practitioner Guide (English)](docs/guides/practical_use_cases_guide_en.md)**: Comprehensive manual for IT Risk leaders (DORA TLPT readiness, Vendor AI audits, step-by-step test cases, and stakeholder briefing strategies).
+- **[Praktijkgids & Use-Cases (Nederlands)](docs/guides/practical_use_cases_guide.md)**: Volledige Nederlandstalige gids voor de dagelijkse IT Risk praktijk.
 - **[Requirements Specification (FRs & NFRs)](docs/spec/requirements.md)**: Full breakdown of 15 Functional Requirements and 16 Non-Functional Requirements, mapped to PTES, TIBER-EU, DORA, and NIST SP 800-115.
 - **[Architecture Blueprint](docs/architecture/blueprint.md)**: Software design patterns, component modularity, and security gates.
 - **[Development & Implementation Roadmap](docs/roadmap/implementation_plan.md)**: Phased delivery schedule (Sprints 0 to 5).
+- **[Security Policy & Responsible Disclosure](SECURITY.md)**: Operational rules of engagement and vulnerability reporting procedures.
 
 ---
 
@@ -77,11 +80,11 @@ Generated reports will be output to `reports/`:
 
 ---
 
-## Governance & Compliance
+## Legal, Copyright & Restricted Ethical Use License
 
-Designed to support:
-- **DORA (Digital Operational Resilience Act):** Articles 26 & 27 (Threat-Led Penetration Testing).
-- **TIBER-EU:** Rules of Engagement, deconfliction protocols, and threat scenario emulation.
-- **PTES & NIST SP 800-115:** Standardized technical testing lifecycle.
-- **OWASP Top 10 for LLMs v1.1:** Verification of generative AI boundaries.
-- **MITRE ATT&CK & MITRE ATLAS:** Adversarial threat mapping for traditional and AI assets.
+**Copyright (c) 2026 Peter Van Walsem (pietrodiwalsi-design). All Rights Reserved.**
+
+This software is governed by the **[Restricted Ethical & Defensive Use License](LICENSE)**:
+- **Authorized Testing Only:** Execution is strictly limited to authorized internal IT risk auditing, defensive security assessments, and regulatory compliance validation (DORA, TIBER-EU) on systems owned or contracted with prior written authorization.
+- **Strict Prohibitions:** Unauthorized scanning, unconsented probing, Denial of Service (DoS), malicious intrusion, and commercial redistribution without written permission are strictly prohibited.
+- **Disclaimer of Liability:** The author and copyright holder assume zero liability for misuse, damages, operational outages, or legal violations resulting from use of this software.
