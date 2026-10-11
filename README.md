@@ -23,52 +23,19 @@ Unlike typical offensive security scripts, this engine is built from the ground 
    - Streaming JSONL logging with SHA-256 hash chaining (`prev_hash` validation).
    - High evidentiary value for audit, regulatory, and incident response teams.
 4. **AI & LLM Security Probing (`LLMRedTeamModule`):**
-   - Automated evaluation of prompt injections (OWASP LLM01), context/prompt leakage (LLM06), and excessive agency (LLM08).
-5. **Non-Destructive Surface Discovery (`ExternalSurfaceScanner`):**
-   - Rate-controlled service probing and security configuration validation.
+   - Automated evaluation of prompt injections (OWASP LLM01, single- and multi-turn priming), context/prompt leakage (LLM06), and excessive agency (LLM08).
+   - Integrated heuristic response judge separating refusals from actual leaks.
+5. **Non-Destructive Surface Discovery & Web Audit (`ExternalSurfaceScanner`):**
+   - Rate-controlled service probing (ports 22, 80, 443, etc.).
+   - Web security headers audit (HSTS, CSP, X-Frame-Options, X-Content-Type-Options, server leakage).
+6. **Regulatory Reporting & SOC Deconfliction (`ReportGenerator`):**
+   - Generates Executive Summaries (DORA / TIBER-EU format), Technical Remediation Reports (CVSS v3.1 & MITRE ATT&CK/ATLAS), and SOC deconfliction JSON exports.
 
 ---
 
-## Architecture Overview
+## Documentation & Practitioner Guides
 
-```
-Target Input (Domain / IP / URL)
-           │
-           ▼
-┌──────────────────────────────────────────────┐
-│ Gate 1: ScopeManager                         │
-│ - Domain whitelist/blacklist check           │
-│ - DNS resolution check against CIDR blocks   │
-└──────────────────────┬───────────────────────┘
-                       │ [ALLOW] (or abort if OUT_OF_SCOPE)
-                       ▼
-┌──────────────────────────────────────────────┐
-│ Gate 2: SafetyController                     │
-│ - Kill switch status check                   │
-│ - Token bucket rate limiter                  │
-│ - LLM token budget check                     │
-└──────────────────────┬───────────────────────┘
-                       │ [PASS] (or raise InterruptedError)
-                       ▼
-┌──────────────────────────────────────────────┐
-│ Execution Modules                            │
-│ - ExternalSurfaceScanner / LLMRedTeamModule  │
-└──────────────────────┬───────────────────────┘
-                       │
-                       ▼
-┌──────────────────────────────────────────────┐
-│ Gate 3: AuditLogger                          │
-│ - Hash-chained (SHA-256) JSONL logging       │
-│ - Timestamped event recording                │
-└──────────────────────────────────────────────┘
-```
-
-Detailed architectural blueprints are available in [`docs/architecture/blueprint.md`](docs/architecture/blueprint.md).
-
----
-
-## Documentation
-
+- **[Praktijkgids & Use-Cases (Dutch Guide)](docs/guides/practical_use_cases_guide.md)**: Volledige gids voor de dagelijkse IT Risk praktijk (DORA TLPT, Vendor AI audits, hands-on testcases en presentatietips voor CISO/Directie).
 - **[Requirements Specification (FRs & NFRs)](docs/spec/requirements.md)**: Full breakdown of 15 Functional Requirements and 16 Non-Functional Requirements, mapped to PTES, TIBER-EU, DORA, and NIST SP 800-115.
 - **[Architecture Blueprint](docs/architecture/blueprint.md)**: Software design patterns, component modularity, and security gates.
 - **[Development & Implementation Roadmap](docs/roadmap/implementation_plan.md)**: Phased delivery schedule (Sprints 0 to 5).
@@ -90,13 +57,23 @@ pip install -e .
 
 ### Running Tests
 ```bash
-pytest tests/ -v
+python3 -m pytest tests/ -v
 ```
 
-### Executing a Scoped Assessment
+### Executing a Full Assessment with Reporting
 ```bash
-python3 -m src.orchestrator --scope configs/scope.example.yaml --host 192.168.1.10 --llm https://api.example.internal/v1/chat
+python3 -m src.orchestrator \
+  --scope configs/scope.example.yaml \
+  --host 192.168.1.50 \
+  --web https://api.example.internal \
+  --llm https://ai-agent.example.internal/v1/chat \
+  --report-dir reports/
 ```
+
+Generated reports will be output to `reports/`:
+- `executive_summary_*.md` (Management risk overview)
+- `technical_report_*.md` (Engineering remediation actions & CVSS ratings)
+- `soc_deconfliction_*.json` (SOC correlation timestamps & entry hashes)
 
 ---
 
@@ -107,3 +84,4 @@ Designed to support:
 - **TIBER-EU:** Rules of Engagement, deconfliction protocols, and threat scenario emulation.
 - **PTES & NIST SP 800-115:** Standardized technical testing lifecycle.
 - **OWASP Top 10 for LLMs v1.1:** Verification of generative AI boundaries.
+- **MITRE ATT&CK & MITRE ATLAS:** Adversarial threat mapping for traditional and AI assets.

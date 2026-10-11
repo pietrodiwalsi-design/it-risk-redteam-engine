@@ -7,6 +7,7 @@ from src.core.safety_controller import SafetyController
 from src.core.scope_manager import ScopeManager
 from src.modules.llm.red_team_module import LLMRedTeamModule
 from src.modules.surface.surface_scanner import ExternalSurfaceScanner
+from src.reporting.report_generator import ReportGenerator
 
 logging.basicConfig(
     level=logging.INFO,
@@ -16,7 +17,10 @@ logger = logging.getLogger("orchestrator")
 
 
 class EngineOrchestrator:
-    """Coordinates execution across surface scanning, HTTP header audits, and LLM assessment modules."""
+    """Coordinates execution across surface scanning, HTTP header audits, LLM assessment,
+
+    and compliance reporting (DORA / TIBER-EU / MITRE).
+    """
 
     def __init__(
         self,
@@ -24,9 +28,12 @@ class EngineOrchestrator:
         log_file: str = "audit_log.jsonl",
         max_rps: float = 5.0,
         vectors_file: Optional[str] = None,
+        report_dir: Optional[str] = "reports",
     ):
         self.scope_mgr = ScopeManager(scope_file)
         self.safety = SafetyController(max_rps=max_rps)
+        self.log_file = log_file
+        self.report_dir = report_dir
         self.audit = AuditLogger(log_file)
         self.surface_scanner = ExternalSurfaceScanner(self.scope_mgr, self.safety)
         self.llm_tester = LLMRedTeamModule(self.safety, vectors_file=vectors_file)
@@ -65,6 +72,15 @@ class EngineOrchestrator:
                 self.audit.log_action("LLM_EVALUATION", {"endpoint": url, "results": res_list})
                 logger.info("Completed %d LLM test vectors for %s", len(res_list), url)
 
+        # 4. Reporting phase
+        if self.report_dir:
+            logger.info("Generating compliance reports in %s...", self.report_dir)
+            reporter = ReportGenerator(self.log_file)
+            report_paths = reporter.write_reports(self.report_dir)
+            logger.info("Executive Summary: %s", report_paths["executive_summary"])
+            logger.info("Technical Report: %s", report_paths["technical_report"])
+            logger.info("SOC Deconfliction: %s", report_paths["soc_deconfliction"])
+
         logger.info("Assessment pipeline completed. Integrity check: %s", self.audit.verify_integrity())
 
 
@@ -72,13 +88,18 @@ def main():
     parser = argparse.ArgumentParser(description="IT Risk & Red Teaming Assessment Engine")
     parser.add_argument("--scope", default="configs/scope.example.yaml", help="Path to scope.yaml")
     parser.add_argument("--log", default="audit_log.jsonl", help="Path to audit log file")
+    parser.add_argument("--report-dir", default="reports", help="Directory to save generated reports")
     parser.add_argument("--host", action="append", help="Surface target host")
     parser.add_argument("--web", action="append", help="Web target URL for header auditing")
     parser.add_argument("--llm", action="append", help="LLM endpoint URL")
 
     args = parser.parse_args()
 
-    orchestrator = EngineOrchestrator(scope_file=args.scope, log_file=args.log)
+    orchestrator = EngineOrchestrator(
+        scope_file=args.scope,
+        log_file=args.log,
+        report_dir=args.report_dir,
+    )
     asyncio.run(
         orchestrator.run_assessment(
             surface_hosts=args.host or ["192.168.1.50"],
